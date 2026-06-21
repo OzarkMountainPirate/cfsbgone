@@ -180,7 +180,7 @@ A content filter's job is to classify traffic into categories (social media, str
 
 Putting it together: a content filter trying to block VPNs has three levers (reputation, port, signature). This stack removes all three. Reputation doesn't fire because you're not a known VPN host. Port-blocking doesn't fire because you're on 443. Signature-matching doesn't fire because `tls-crypt` encrypts the OpenVPN fingerprint.
 
-The single exception, again, is **TLS/SSL inspection** (§1). If the filter is a man-in-the-middle with a CA your device trusts, it decrypts the 443 stream and sees the OpenVPN protocol inside. Confirm you're free of TLS inspection (no custom CA installed, no captive-portal CA prompt) and this lever is also off the table.
+One of the few exceptions, again, is **TLS/SSL inspection** (§1). If the filter is a man-in-the-middle with a CA your device trusts, it decrypts the 443 stream and sees the OpenVPN protocol inside. Confirm you're free of TLS inspection (no custom CA installed, no captive-portal CA prompt) and this lever is also off the table.
 
 > Note: This is distinct from a captive portal's *authentication* wall. Bypassing a sign-in page is not what this does — see the threat-model note in §1. This is purely about defeating *category/protocol-based blocking of VPNs* once you have network access.
 
@@ -206,7 +206,7 @@ These tools come with rule sets (Emerging Threats, Snort Community, etc.) that f
 
 ### 5.4 Multiplexing the port amplifies the evasion
 
-Even if your VPS IP becomes the target of suspicion ("why is this IP getting so many long-lived encrypted connections?"), the fact that the *same* IP and port also serves real HTTPS to real websites provides cover. A blocklist entry for the IP would simultaneously block legitimate websites. Heuristic rule writers have to weigh false positives, and a mixed-traffic IP is hard to confidently classify.
+Even if your VPS IP becomes the target of suspicion ("why is this IP getting so many long-lived encrypted connections?"), the fact that the *same* IP and port also serves real HTTPS to real websites provides cover. A blocklist entry for the IP would simultaneously block "legitimate" websites and service provide by the host. Heuristic rule writers have to weigh false positives, and a mixed-traffic IP is hard to confidently classify.
 
 For high-stakes evasion, you can further muddy the waters by:
 - Hosting genuinely-popular content on Traefik (CDN-like decoy services).
