@@ -1,0 +1,55 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  insecure: false   # do NOT expose dashboard on :8080; require explicit router
+
+log:
+  level: INFO
+
+accessLog:
+  format: json      # JSON logs are required by CrowdSec if you add it later
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+
+  websecure:
+    address: ":8443"
+    proxyProtocol:
+      # Trust PROXY protocol headers from the Docker bridge range.
+      # sslh lives on this bridge and is the only thing that should be
+      # sending us PROXY headers.
+      trustedIPs:
+        - "172.16.0.0/12"
+    http:
+      tls:
+        certResolver: cloudflare
+
+providers:
+  docker:
+    exposedByDefault: false   # require explicit traefik.enable=true label
+    network: proxy
+  file:
+    directory: /etc/traefik/dynamic
+    watch: true
+
+certificatesResolvers:
+  cloudflare:
+    acme:
+      # CHANGE THIS to a real email you control.
+      email: you@example.com
+      storage: /acme/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "1.0.0.1:53"

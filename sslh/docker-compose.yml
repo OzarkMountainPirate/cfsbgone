@@ -1,0 +1,22 @@
+services:
+  traefik:
+    image: traefik:v3.7
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      # Port 80 is for the HTTP→HTTPS redirect entrypoint.
+      # Port 443 is NOT mapped here — sslh owns 443 on the host and
+      # forwards TLS-classified connections to traefik:8443 internally.
+      - "80:80"
+    env_file: .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./dynamic:/etc/traefik/dynamic:ro
+      - ./acme:/acme
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

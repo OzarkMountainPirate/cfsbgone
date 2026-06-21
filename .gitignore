@@ -1,0 +1,30 @@
+# SECRETS — never commit
+**/.env
+traefik/acme/acme.json
+traefik/acme/*.json
+
+# OpenVPN PKI — contains private keys, do not commit
+openvpn/data/
+*.ovpn
+*.key
+*.crt
+*.csr
+*.pem
+ta.key
+
+# Runtime / generated state
+**/logs/
+**/log/
+*.log
+
+# Editor / OS clutter
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Keep empty directories
+!**/.gitkeep
