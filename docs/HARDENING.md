@@ -428,7 +428,7 @@ Hardening is layered. The defenses above protect against:
 
 - Mass-scanner brute force on SSH → cert-only auth + nftables drop + fail2ban
 - VPS-level compromise via container escape → see "Container privilege reality" below for an honest per-container breakdown and the mitigations that actually apply
-- Network-level abuse via tunneled traffic → IP reputation isolation (this VPS is dedicated, not shared with your mail server)
+- Network-level abuse via tunneled traffic → IP reputation isolation (this VPS is dedicated, using a common trusted VPS provider)
 - DNS leaks → `push "dhcp-option DNS"` + clients that apply pushed DNS
 
 What this doesn't protect against, and you should consider:
