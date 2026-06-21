@@ -106,7 +106,7 @@ sudo mkdir -p /opt/containers
 sudo chown $USER:$USER /opt/containers
 cd /opt/containers
 
-git clone https://github.com/YOUR_USERNAME/cfsbgone.git
+git clone https://github.com/OzarkMountainPirate/cfsbgone.git
 cd cfsbgone
 ```
 
