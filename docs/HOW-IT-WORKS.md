@@ -15,7 +15,7 @@ We are trying to make an outbound TCP connection from a client device to a VPN e
 - **Signature-based IDS/IPS**: Suricata, Snort, and similar tools maintain rulesets that fingerprint known protocols, including VPN protocols. They can alert on or actively block matching traffic.
 - **Application-layer enforcement**: SNI inspection in TLS ClientHello, certificate validation, JA3/JA3S fingerprinting.
 
-### The one thing that defeats this stack: TLS/SSL inspection
+### One thing that defeats this stack: TLS/SSL inspection
 
 The entire design rests on one assumption: **the network is not performing TLS/SSL interception** (a.k.a. SSL inspection, break-and-inspect, or a transparent MITM proxy). If it is, the filter terminates your TLS connection at its own appliance, decrypts everything, inspects it, and re-encrypts to the destination — and it can see straight through to the OpenVPN protocol inside.
 
